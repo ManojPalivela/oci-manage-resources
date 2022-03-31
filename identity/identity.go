@@ -77,11 +77,11 @@ func GetSubscribedRegions(config common.ConfigurationProvider) []string {
 // compartment attributes: compartment name, compartment ocid
 
 type ActiveCompartments struct {
-	compartments []ActiveCompartment
+	Compartments []ActiveCompartment
 }
 type ActiveCompartment struct {
-	compartmentName string
-	compartmentOCID string
+	CompartmentName string
+	CompartmentOCID string
 }
 
 func GetActiveCompartments(config common.ConfigurationProvider) ActiveCompartments {
@@ -110,9 +110,9 @@ func GetActiveCompartments(config common.ConfigurationProvider) ActiveCompartmen
 	}
 
 	for _, c := range resp.Items {
-		compartment.compartmentOCID = *c.CompartmentId
-		compartment.compartmentName = *c.Name
-		compartments.compartments = append(compartments.compartments, compartment)
+		compartment.CompartmentOCID = *c.CompartmentId
+		compartment.CompartmentName = *c.Name
+		compartments.Compartments = append(compartments.Compartments, compartment)
 	}
 
 	return compartments
