@@ -4,18 +4,22 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"sync"
 	"time"
 )
 
+var mu sync.Mutex
+
 //write log to specified file
 func WriteLog(logFile string, message string) {
-	file, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+
+	file, err := os.OpenFile(logFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	defer file.Close()
 	log.SetOutput(file)
 	log.Println(message)
+	file.Close()
 }
 
 //get unique string based on current time in GMT
@@ -62,9 +66,9 @@ func GetTimeStampWithTZ(tz *time.Location) string {
 	}
 
 	if int(now.In(tz).Second()) <= 9 {
-		minute = "0" + strconv.Itoa(int(now.In(tz).Second()))
+		second = "0" + strconv.Itoa(int(now.In(tz).Second()))
 	} else {
-		minute = strconv.Itoa(int(now.In(tz).Second()))
+		second = strconv.Itoa(int(now.In(tz).Second()))
 	}
 
 	millis := now.In(tz).Nanosecond()

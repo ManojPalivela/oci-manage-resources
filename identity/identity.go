@@ -110,7 +110,7 @@ func GetActiveCompartments(config common.ConfigurationProvider) ActiveCompartmen
 	}
 
 	for _, c := range resp.Items {
-		compartment.CompartmentOCID = *c.CompartmentId
+		compartment.CompartmentOCID = *c.Id
 		compartment.CompartmentName = *c.Name
 		compartments.Compartments = append(compartments.Compartments, compartment)
 	}
